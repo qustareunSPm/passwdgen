@@ -4,6 +4,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-if not BOT_TOKEN:
-    raise RuntimeError("Не задан BOT_TOKEN. Создайте файл .env (см. .env.example)")
+
+def _require(name: str) -> str:
+    value = os.getenv(name)
+    if not value:
+        raise RuntimeError(f"Не задана переменная {name} (см. .env.example)")
+    return value
+
+
+BOT_TOKEN = _require("BOT_TOKEN")
+ALLOWED_USER_ID = int(_require("ALLOWED_USER_ID"))
